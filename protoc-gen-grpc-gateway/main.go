@@ -5,7 +5,7 @@
 // into your $PATH with a name "protoc-gen-grpc-gateway" and run
 //   protoc --grpc-gateway_out=output_directory path/to/input.proto
 //
-// See README.md for more details.
+// See readme.md for more details.
 package main
 
 import (
