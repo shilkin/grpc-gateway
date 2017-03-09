@@ -33,6 +33,7 @@ func (r *Registry) loadServices(file *File) error {
 			}
 			if opts == nil {
 				glog.V(1).Infof("Found non-target method: %s.%s", svc.GetName(), md.GetName())
+				continue
 			}
 			glog.V(2).Infof("API options for %s.%s: %#v", svc.GetName(), md.GetName(), opts)
 			meth, err := r.newMethod(svc, md, opts)
@@ -167,7 +168,7 @@ func (r *Registry) newMethod(svc *Service, md *descriptor.MethodDescriptorProto,
 	return meth, nil
 }
 
-func extractAPIOptions(meth *descriptor.MethodDescriptorProto) (*apiOptions, error) { // (*options.HttpRule, error) {
+func extractAPIOptions(meth *descriptor.MethodDescriptorProto) (*apiOptions, error) {
 	var opts apiOptions
 
 	if meth.Options == nil {
