@@ -9,8 +9,8 @@ import (
 	"github.com/golang/protobuf/ptypes/empty"
 	"github.com/rogpeppe/fastuuid"
 	examples "github.com/shilkin/grpc-gateway/examples/examplepb"
-	sub "github.com/shilkin/grpc-gateway/examples/sub"
-	sub2 "github.com/shilkin/grpc-gateway/examples/sub2"
+	"github.com/shilkin/grpc-gateway/examples/sub"
+	"github.com/shilkin/grpc-gateway/examples/sub2"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
@@ -132,7 +132,7 @@ func (s *_ABitOfEverythingServer) List(_ *empty.Empty, stream examples.StreamSer
 	}
 
 	// return error when metadata includes error header
-	if header, ok := metadata.FromContext(stream.Context()); ok {
+	if header, ok := metadata.FromIncomingContext(stream.Context()); ok {
 		if v, ok := header["error"]; ok {
 			stream.SetTrailer(metadata.New(map[string]string{
 				"foo": "foo2",
