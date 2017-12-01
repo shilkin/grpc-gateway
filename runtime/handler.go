@@ -15,6 +15,8 @@ import (
 
 // ForwardResponseStream forwards the stream from gRPC server to REST client.
 func ForwardResponseStream(ctx context.Context, marshaler Marshaler, w http.ResponseWriter, req *http.Request, recv func() (proto.Message, error), opts ...func(context.Context, http.ResponseWriter, proto.Message) error) {
+	defer tryToFinishSpan(ctx)
+
 	f, ok := w.(http.Flusher)
 	if !ok {
 		grpclog.Printf("Flush not supported in %T", w)
