@@ -390,6 +390,10 @@ func Register{{$svc.GetName}}HandlerWithMiddleware(ctx context.Context, mux *run
 		}
 		resp, md, err := request_{{$svc.GetName}}_{{$m.GetName}}_{{$b.Index}}(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
+		{{if $m.GetServerStreaming}}
+		ctx = runtime.TryToCopySpan(ctx, resp.Context())
+		{{end}}
+
 		if err != nil {
 			runtime.HTTPError(ctx, outboundMarshaler, w, req, err)
 			return
